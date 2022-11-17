@@ -19,7 +19,8 @@ export const CartProvider = ({children})=>{
     const [products, setProducts] = useState([]);
 
     const getProducts = async () => {
-        const data = await axios.get("http://localhost:5000/api/productos")
+        //const data = await axios.get("http://localhost:5000/api/productos")
+        const data = await axios.get("https://e35c-181-234-155-58.ngrok.io/api/productos")   //ngrok
         const products = data.data.productos
         setProducts(products);
         //.then(({ data }) => setProducts(data.products));
