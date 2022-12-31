@@ -1,6 +1,13 @@
 import {createContext, useEffect, useState} from "react";
 import axios from "axios";
 
+//esto es para el bot:
+
+/*const { Telegraf } = require("telegraf");
+//const TOKEN = "5153026043:AAEOA6Jgze21I8PGuZWKJoNMGY1Wzl6S5OI";
+const TOKEN = "5489576102:AAEppJsThPctLwr4iEp9C5iyGMMdd9JHUXk";
+const bot = new Telegraf(TOKEN);*/
+
 /* Creamos el context, se le puede pasar un valor inicial */
 export const CartContext = createContext();
 
@@ -18,9 +25,24 @@ export const CartProvider = ({children})=>{
     const [cartItems, setCartItems] = useState([]);
     const [products, setProducts] = useState([]);
 
+
+    /*const mostrarBot = async () => {
+        const dataBot = await axios.get("https://be9b-186-112-70-194.ngrok.io/api/webhook")   //ngrok
+
+        if (dataBot===true){
+            bot.launch();
+        }
+        bot.launch()
+
+        console.log(dataBot)
+    }*/
+
+
     const getProducts = async () => {
-        //const data = await axios.get("http://localhost:5000/api/productos")
-        const data = await axios.get("https://e35c-181-234-155-58.ngrok.io/api/productos")   //ngrok
+        const data = await axios.get("http://localhost:5000/productos/productos")
+        
+        //const data = await axios.get("https://eb3c-181-234-153-170.ngrok.io/api/productos")   //ngrok
+        
         const products = data.data.productos
         setProducts(products);
         //.then(({ data }) => setProducts(data.products));
@@ -30,6 +52,7 @@ export const CartProvider = ({children})=>{
 
     useEffect(() => {
       getProducts();
+      //mostrarBot();
       /*localStorage.setItem('cartProducts', JSON.stringify(cartItems));
       console.log(cartItems)*/
     //}, [cartItems]);
@@ -52,6 +75,7 @@ export const CartProvider = ({children})=>{
         } else {
             setCartItems([...cartItems, {...product,cantidad: 1}]);               //era amount cambio a cantidad
         }
+        //console.log("carrito:",cartItems);
     };
 
     const deleteItemToCart = (product) => {
@@ -79,11 +103,17 @@ export const CartProvider = ({children})=>{
                 } else return productInCart
             })
         }*/
+        //console.log("carrito:",cartItems);
+    };
+
+    const makeOrder = () => {
+        console.log("carritu:",cartItems)
+        return cartItems
     };
 
     return(
         <CartContext.Provider 
-        value={{cartItems, products, addItemToCart, deleteItemToCart}}
+        value={{cartItems, products, addItemToCart, deleteItemToCart,makeOrder}}
         >
             {children}
         </CartContext.Provider>

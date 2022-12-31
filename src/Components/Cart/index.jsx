@@ -13,6 +13,9 @@ const Cart = () => {
   /* Traemos del context los productos del carrito */
   const { cartItems } = useContext(CartContext);
 
+  /*Traigo del context la funcion makeOrder*/
+  const { makeOrder } = useContext(CartContext);
+
   /* Cada vez que se modifica el carrito, actualizamos la cantidad de productos */
   useEffect(() => {
     setProductsLength(
@@ -88,6 +91,9 @@ const Cart = () => {
           )}
 
           <h2 className={styles.total}>Total: ${total}</h2>
+          <div className={styles.realizarPedido} onClick={()=> makeOrder()}>
+            <button>Realizar pedido</button>
+          </div>
         </div>
       )}
     </div>

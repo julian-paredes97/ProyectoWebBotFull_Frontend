@@ -5,7 +5,9 @@ const bot = new Telegraf(TOKEN);
 
 //const web_link = "https://celebrated-torte-184681.netlify.app/";
 //const web_link = "https://snazzy-tartufo-5f17da.netlify.app/";
-const web_link = "https://lively-speculoos-0685e4.netlify.app/";
+//const web_link = "https://lively-speculoos-0685e4.netlify.app/";
+
+const web_link = "https://snazzy-tartufo-5f17da.netlify.app/";
 
 
 bot.start((ctx) =>
