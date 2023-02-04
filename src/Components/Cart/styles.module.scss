@@ -85,7 +85,7 @@
       }
   
       .productsContainer{
-        max-height: 200px;
+        max-height: 200px;  //de aqui se mueve el tamaño de la vista de los prods del carrito
         overflow-y: scroll;
         margin-top: 5px;
       }
@@ -103,4 +103,12 @@
 ::-webkit-scrollbar-thumb {
   background-color: #797979;
   border-radius: 20px;
+}
+
+.botonpedido{
+  border-radius: 999px;
+  border-color: white;
+  border-width: 4px;
+  margin-bottom: 2px;
+  
 }

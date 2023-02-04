@@ -39,7 +39,8 @@ export const CartProvider = ({children})=>{
 
 
     const getProducts = async () => {
-        const data = await axios.get("http://localhost:5000/productos/productos")
+        //const data = await axios.get("http://localhost:5000/prod/productos")
+        const data = await axios.get("https://flask-web-bot-app.loca.lt/prod/productos")
         
         //const data = await axios.get("https://eb3c-181-234-153-170.ngrok.io/api/productos")   //ngrok
         
@@ -106,9 +107,17 @@ export const CartProvider = ({children})=>{
         //console.log("carrito:",cartItems);
     };
 
-    const makeOrder = () => {
+    const makeOrder = async () => {
+        /*Aqui toca meter el post para el back con el pedido completo*/
+        //const data = await axios.get("http://localhost:5000/productos/productos").
         console.log("carritu:",cartItems)
-        return cartItems
+        //const result = await axios.post("http://localhost:5000/pet/recibePedido",cartItems)
+        const result = await axios.post("https://flask-web-bot-app.loca.lt/pet/recibePedido",cartItems)
+        console.log(result.data.data);
+        let carrito=cartItems
+        setCartItems([])
+        
+        return carrito
     };
 
     return(

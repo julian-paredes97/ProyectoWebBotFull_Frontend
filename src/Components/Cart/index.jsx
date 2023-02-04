@@ -29,6 +29,11 @@ const Cart = () => {
     0
   );
 
+  const pedidoRealizado=()=>{   //esta funcion es para poder hacer la de makeorder y cerrar el carrito al tiempo
+    makeOrder()
+    setCartOpen(!cartOpen)
+  }
+
   //const titleRef = useRef();
 
   return (
@@ -91,8 +96,8 @@ const Cart = () => {
           )}
 
           <h2 className={styles.total}>Total: ${total}</h2>
-          <div className={styles.realizarPedido} onClick={()=> makeOrder()}>
-            <button>Realizar pedido</button>
+          <div className={styles.realizarPedido} onClick={()=> pedidoRealizado()}> 
+            <button className={styles.botonpedido}>Realizar pedido</button>
           </div>
         </div>
       )}
