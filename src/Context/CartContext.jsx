@@ -24,6 +24,8 @@ export const CartProvider = ({children})=>{
     /* Creamos un estado para el carrito */
     const [cartItems, setCartItems] = useState([]);
     const [products, setProducts] = useState([]);
+    /* Creamos un estado para el id o identificacion */
+    const [identificacion, setIdentificacion] = useState([]);
 
 
     /*const mostrarBot = async () => {
@@ -51,8 +53,16 @@ export const CartProvider = ({children})=>{
         //console.log("DATamelo:",data.data.productos);
     };
 
+    const getIdentificacion = async () =>{
+        const id = await axios.get("https://flask-web-bot-app.loca.lt/")
+        const identificacion = data.data.identificacion
+        console.log("id:",id);
+        console.log("identificacion:",identificacion);
+    };
+
     useEffect(() => {
       getProducts();
+      getIdentificacion();
       //mostrarBot();
       /*localStorage.setItem('cartProducts', JSON.stringify(cartItems));
       console.log(cartItems)*/
