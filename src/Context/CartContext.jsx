@@ -1,5 +1,5 @@
 import {createContext, useEffect, useState} from "react";
-import axios from "axios";
+import axios, { Axios } from "axios";
 
 //esto es para el bot:
 
@@ -24,8 +24,10 @@ export const CartProvider = ({children})=>{
     /* Creamos un estado para el carrito */
     const [cartItems, setCartItems] = useState([]);
     const [products, setProducts] = useState([]);
-    /* Creamos un estado para el id o identificacion */
-    const [identificacion, setIdentificacion] = useState([]);
+    const [identificacion, setIdentificacion] = useState("");
+
+    //let ident = ""
+    
 
 
     /*const mostrarBot = async () => {
@@ -38,6 +40,12 @@ export const CartProvider = ({children})=>{
 
         console.log(dataBot)
     }*/
+
+    const fetchData = () => {
+        axios.post("https://flask-web-bot-app.loca.lt/botdata").then((res)=>{
+            setIdentificacion(res.data.identificacion)
+        });
+    };
 
 
     const getProducts = async () => {
@@ -53,16 +61,33 @@ export const CartProvider = ({children})=>{
         //console.log("DATamelo:",data.data.productos);
     };
 
-    const getIdentificacion = async () =>{
-        const id = await axios.get("https://flask-web-bot-app.loca.lt/")
-        const identificacion = data.data.identificacion
-        console.log("id:",id);
-        console.log("identificacion:",identificacion);
+    const getIdentificacion = async () => {
+        //const ident = await axios.get("https://flask-web-bot-app.loca.lt/botdata")
+        const ident = await axios.get("https://flask-web-bot-app.loca.lt/botdata")
+        //const identificacion = ident.data.identificacion
+        const identificacion = ident.data
+        console.log("ident:",ident)
+        console.log("identificacion:",identificacion)
+        setIdentificacion(identificacion);
     };
 
+    /* se ejecuta solo una vez */
     useEffect(() => {
-      getProducts();
-      getIdentificacion();
+        getProducts();
+        //getIdentificacion();
+
+        //guia:
+        //fetch("https://dog.ceo/api/breeds/image/random") // ⬅️ 1) llamada a la API, el resultado es una Promise
+        //.then((response) => response.json()) // ⬅️ 2) cuando la petición finalice, transformamos la respuesta a JSON (response.json() también es una Promise)
+        //.then((dog) => console.log(dog)); // ⬅️ 3) aquí ya tenemos la respuesta en formato objeto
+        //guia
+      
+        // fetch("https://flask-web-bot-app.loca.lt")
+        // .then((response) => response.json())
+        // .then(jsonData => ident = jsonData);
+        //.then(jsonData => setIdentificacion(jsonData));
+            // do something with the data, e.g. setState
+
       //mostrarBot();
       /*localStorage.setItem('cartProducts', JSON.stringify(cartItems));
       console.log(cartItems)*/
@@ -120,11 +145,36 @@ export const CartProvider = ({children})=>{
     const makeOrder = async () => {
         /*Aqui toca meter el post para el back con el pedido completo*/
         //const data = await axios.get("http://localhost:5000/productos/productos").
+
+        //fetchData();
+
+        //await axios.get("https://flask-web-bot-app.loca.lt/botdata").then((res)=>{
+        //    setIdentificacion(res.data.identificacion)
+        //});
+        
+        const data = await axios.get("https://flask-web-bot-app.loca.lt/botdata")
+        
+        //const data = await axios.get("https://eb3c-181-234-153-170.ngrok.io/api/productos")   //ngrok
+        
+        const identificacion = data.data
+        setProducts(identificacion);
+
+        
+        //getIdentificacion();
         console.log("carritu:",cartItems)
+
+        //let carrito=cartItems
+
+        const carrito = {
+            ...cartItems,
+            identificacion
+         };
+
         //const result = await axios.post("http://localhost:5000/pet/recibePedido",cartItems)
-        const result = await axios.post("https://flask-web-bot-app.loca.lt/pet/recibePedido",cartItems)
+        //const result = await axios.post("https://flask-web-bot-app.loca.lt/recibePedido",cartItems)
+        const result = await axios.post("https://flask-web-bot-app.loca.lt/recibePedido",carrito)
         console.log(result.data.data);
-        let carrito=cartItems
+        
         setCartItems([])
         
         return carrito
