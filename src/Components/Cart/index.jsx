@@ -3,6 +3,7 @@ import { useContext, useEffect, useState} from "react";
 import { ItemCart } from "../ItemCart";
 import {CartContext} from "../../Context/CartContext"
 import styles from "./styles.module.scss"
+//import Spinner from 'react-bootstrap/Spinner';
 
 const Cart = () => {
   /* Creamos 2 estados, uno para ver si el carrito esta abierto o no 
@@ -29,9 +30,18 @@ const Cart = () => {
     0
   );
 
+  /*function spinnerLoading() {
+    return (
+      <>
+        <Spinner animation="border" variant="success" />
+      </>
+    );
+  }*/
+
   const pedidoRealizado=()=>{   //esta funcion es para poder hacer la de makeorder y cerrar el carrito al tiempo
-    makeOrder()
-    setCartOpen(!cartOpen)
+    //spinnerLoading();
+    makeOrder();
+    setCartOpen(!cartOpen);
   }
 
   //const titleRef = useRef();
@@ -96,9 +106,21 @@ const Cart = () => {
           )}
 
           <h2 className={styles.total}>Total: ${total}</h2>
-          <div className={styles.realizarPedido} onClick={()=> pedidoRealizado()}> 
-            <button className={styles.botonpedido}>Realizar pedido</button>
-          </div>
+
+          {cartItems.length !== 0 ? (
+            <div className={styles.realizarPedido} onClick={()=> pedidoRealizado()}> 
+              <button className={styles.botonpedido}>Realizar pedido</button>
+            </div>
+          ) : (
+            <div className={styles.realizarPedidoHide}> 
+              <button className={styles.botonpedido}>Realizar pedido</button>
+            </div>
+          )}
+
+
+          
+
+          
         </div>
       )}
     </div>

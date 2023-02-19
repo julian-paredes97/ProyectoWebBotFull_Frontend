@@ -2,11 +2,12 @@
 //import React, {useEffect, useRef, useState} from 'react'
 import React, {useState, useEffect, useContext} from 'react'
 //import {productsData} from '../../Data/ProductsData'
-import  CartContext from '../../Context/CartContext'
+import CartContext from '../../Context/CartContext'
 import Card from '../Card'
 import styles from "./styles.module.scss"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap'
+//import FullPageLoader from '../Loader';
 
 //var temp = productsData;
 
@@ -37,6 +38,7 @@ function Products () {
 
   useEffect(() => {              //conectar a telegram
     tele.ready();
+    tele.expand();
   });
 
 /*
@@ -172,7 +174,7 @@ function Products () {
 
   return (
     <>
-
+    
     <Dropdown /*ref={btnRef}*/ isOpen={dropdown} toggle={abrirCerrarDropdown}>
         <DropdownToggle caret className="botonDropdown">
           Categorias

@@ -1,5 +1,5 @@
 import {createContext, useEffect, useState} from "react";
-import axios, { Axios } from "axios";
+import axios from "axios";
 
 //esto es para el bot:
 
@@ -7,6 +7,8 @@ import axios, { Axios } from "axios";
 //const TOKEN = "5153026043:AAEOA6Jgze21I8PGuZWKJoNMGY1Wzl6S5OI";
 const TOKEN = "5489576102:AAEppJsThPctLwr4iEp9C5iyGMMdd9JHUXk";
 const bot = new Telegraf(TOKEN);*/
+
+const tele = window.Telegram.WebApp; //conectar a telegram
 
 /* Creamos el context, se le puede pasar un valor inicial */
 export const CartContext = createContext();
@@ -24,7 +26,9 @@ export const CartProvider = ({children})=>{
     /* Creamos un estado para el carrito */
     const [cartItems, setCartItems] = useState([]);
     const [products, setProducts] = useState([]);
-    const [identificacion, setIdentificacion] = useState("");
+
+    const [showCart,setShowCart] = useState(true);
+    //const [identificacion, setIdentificacion] = useState("");
 
     //let ident = ""
     
@@ -41,11 +45,11 @@ export const CartProvider = ({children})=>{
         console.log(dataBot)
     }*/
 
-    const fetchData = () => {
+    /*const fetchData = () => {
         axios.post("https://flask-web-bot-app.loca.lt/botdata").then((res)=>{
             setIdentificacion(res.data.identificacion)
         });
-    };
+    };*/
 
 
     const getProducts = async () => {
@@ -61,7 +65,7 @@ export const CartProvider = ({children})=>{
         //console.log("DATamelo:",data.data.productos);
     };
 
-    const getIdentificacion = async () => {
+    /*const getIdentificacion = async () => {
         //const ident = await axios.get("https://flask-web-bot-app.loca.lt/botdata")
         const ident = await axios.get("https://flask-web-bot-app.loca.lt/botdata")
         //const identificacion = ident.data.identificacion
@@ -69,7 +73,7 @@ export const CartProvider = ({children})=>{
         console.log("ident:",ident)
         console.log("identificacion:",identificacion)
         setIdentificacion(identificacion);
-    };
+    };*/
 
     /* se ejecuta solo una vez */
     useEffect(() => {
@@ -151,13 +155,20 @@ export const CartProvider = ({children})=>{
         //await axios.get("https://flask-web-bot-app.loca.lt/botdata").then((res)=>{
         //    setIdentificacion(res.data.identificacion)
         //});
+
+        /* ESTO ESTA bien */ 
+        console.log("carritu:",cartItems)
+        let carritoTemp = cartItems;
+        setCartItems([])
+
+        setShowCart(false);
         
         const data = await axios.get("https://flask-web-bot-app.loca.lt/botdata")
         
         //const data = await axios.get("https://eb3c-181-234-153-170.ngrok.io/api/productos")   //ngrok
         
         const identificacion = data.data
-        setProducts(identificacion);
+        //setProducts(identificacion);//disque products mucha gueva
 
         
         //getIdentificacion();
@@ -166,23 +177,34 @@ export const CartProvider = ({children})=>{
         //let carrito=cartItems
 
         const carrito = {
-            ...cartItems,
+            ...carritoTemp,
             identificacion
-         };
+        };
 
         //const result = await axios.post("http://localhost:5000/pet/recibePedido",cartItems)
         //const result = await axios.post("https://flask-web-bot-app.loca.lt/recibePedido",cartItems)
+        let flag= true;
+        const ready ={
+            flag
+        };
         const result = await axios.post("https://flask-web-bot-app.loca.lt/recibePedido",carrito)
+        const readyFlag = await axios.post("https://flask-web-bot-app.loca.lt/pedidoListo",ready)
+        //setShowCart(true);
+        tele.close();
         console.log(result.data.data);
+        console.log(readyFlag.data.data);
         
-        setCartItems([])
+        
+
+        /* ESTO ESTA bien */
         
         return carrito
+        //return cartItems
     };
 
     return(
         <CartContext.Provider 
-        value={{cartItems, products, addItemToCart, deleteItemToCart,makeOrder}}
+        value={{cartItems, products, addItemToCart, deleteItemToCart,makeOrder,showCart}}
         >
             {children}
         </CartContext.Provider>

@@ -1,0 +1,39 @@
+.fpcontainer{
+    /*position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #f8f8f8ad;*/
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    font-family: Roboto;
+    //position: relative;
+    z-index: 1000;
+}
+
+.fpcontainer .fploader{
+    /*top: 30%;
+    left: 48%;*/
+    top: 35%;
+    z-index: 1000;
+    position: absolute;
+}
+
+.textp{
+    /*width: 100vw;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    font-family: Roboto;
+    //position: relative;
+    z-index: 1000;*/
+    //margin-top: 45px;
+    top: 42%;
+    //left: 45%;
+    z-index: 1000;
+    position: absolute;
+
+}
