@@ -28,7 +28,6 @@ export const CartProvider = ({children})=>{
     const [products, setProducts] = useState([]);
 
     const [showCart,setShowCart] = useState(true);
-    //const [identificacion, setIdentificacion] = useState("");
 
     //let ident = ""
     
@@ -75,8 +74,52 @@ export const CartProvider = ({children})=>{
         setIdentificacion(identificacion);
     };*/
 
-    /* se ejecuta solo una vez */
+    //const [data,setData] = useState([{}]);
+    const [identificacionUsuario, setIdentificacionUsuario] = useState([{}]);
+    const [datosUsuario, setDatosUsuario] = useState([{}]);
+    /*const [datosUsuarioUser, setDatosUsuarioUser] = useState([{}]);
+    const [datosUsuarioChat, setDatosUsuarioChat] = useState([{}]);*/
+    //const [identificacionUsuario, setIdentificacionUsuario] = useState("");
+  
+    /*useEffect(()=>{
+        
+    },[])*/
+
+
+    /* se ejecuta solo una vez cuando se abre el front */
     useEffect(() => {
+
+        let initDataUnsafe = window.Telegram.WebApp.initDataUnsafe.user;
+        /*let initUserData = window.Telegram.WebApp.user;
+        let initChatData = window.Telegram.WebApp.chat;*/
+
+        setDatosUsuario(initDataUnsafe)
+        /*setDatosUsuarioUser(initUserData)
+        setDatosUsuarioChat(initChatData)*/
+        
+
+        /*fetch("https://flask-web-bot-app.loca.lt/botdata2").then(
+        //fetch("/data").then(
+        res => res.json()
+        ).then(
+        //data => {
+        identificacionUsuario => {
+            setIdentificacionUsuario(identificacionUsuario)
+            if (sessionStorage.getItem("identificacionUsuario")!= null){
+                console.log("identificacionUsuario ya existe:",identificacionUsuario);    
+            }
+            else{
+                sessionStorage.setItem("identificacionUsuario",identificacionUsuario);
+                console.log("identificacionUsuario:",identificacionUsuario);
+            }
+            
+        }
+        //    setData(data)
+        //    console.log("data:",data)
+        //}
+        )*/
+
+
         getProducts();
         //getIdentificacion();
 
@@ -163,12 +206,14 @@ export const CartProvider = ({children})=>{
 
         setShowCart(false);
         
-        const data = await axios.get("https://flask-web-bot-app.loca.lt/botdata")
+        //let data = await axios.get("https://flask-web-bot-app.loca.lt/botdata2") //esto servia melo
         
         //const data = await axios.get("https://eb3c-181-234-153-170.ngrok.io/api/productos")   //ngrok
         
-        const identificacion = data.data
+        //let identificacion = data.data //esto servia melo
         //setProducts(identificacion);//disque products mucha gueva
+
+        let identif = sessionStorage.getItem("identificacionUsuario");
 
         
         //getIdentificacion();
@@ -178,21 +223,24 @@ export const CartProvider = ({children})=>{
 
         const carrito = {
             ...carritoTemp,
-            identificacion
+            identif,
+            datosUsuario,
+            tele
         };
 
         //const result = await axios.post("http://localhost:5000/pet/recibePedido",cartItems)
         //const result = await axios.post("https://flask-web-bot-app.loca.lt/recibePedido",cartItems)
-        let flag= true;
-        const ready ={
+        /*let flag= true;
+        let ready ={
             flag
-        };
-        const result = await axios.post("https://flask-web-bot-app.loca.lt/recibePedido",carrito)
-        const readyFlag = await axios.post("https://flask-web-bot-app.loca.lt/pedidoListo",ready)
+        };*/
+        let result = await axios.post("https://flask-web-bot-app.loca.lt/recibePedido",carrito)
+        //let result = await axios.post("https://flask-web-bot-app-jpc97.loca.lt/recibePedido",carrito)
+        //let readyFlag = await axios.post("https://flask-web-bot-app.loca.lt/pedidoListo",ready)
         //setShowCart(true);
         tele.close();
         console.log(result.data.data);
-        console.log(readyFlag.data.data);
+        //console.log(readyFlag.data.data);
         
         
 
