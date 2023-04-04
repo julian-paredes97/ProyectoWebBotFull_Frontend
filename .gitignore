@@ -1,9 +1,9 @@
 
 /Bot/*
 /Bot
-/Data/*
-/Data/ProductsData
-/Data
+/src/Data/*
+/src/Data
+
 
 # dependencies
 /node_modules
