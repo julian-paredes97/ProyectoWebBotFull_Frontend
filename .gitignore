@@ -1,8 +1,8 @@
 
 /Bot/*
 /Bot
-/Data
 /Data/*
+/Data
 
 # dependencies
 /node_modules
