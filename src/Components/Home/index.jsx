@@ -9,7 +9,7 @@ const Home = () => {
 
   const { showCart } = useContext(CartContext);
 
-  console.log("aber:",showCart)
+  console.log("show cart:",showCart)
 
 
   if(showCart===true){

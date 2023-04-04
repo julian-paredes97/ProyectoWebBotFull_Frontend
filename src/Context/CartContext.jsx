@@ -75,15 +75,15 @@ export const CartProvider = ({children})=>{
     /* Funcion que permite enviar los datos del pedido completo al backend: */
     const makeOrder = async () => {
 
-        console.log("carritu:",cartItems)
+        console.log("carrito:",cartItems)
         let carritoTemp = cartItems;
         setCartItems([]) //se vacea el carrito
         /* se cierra y se deja de mostrar el carrito: */
         setShowCart(false);
         
-        console.log("carritu:",cartItems)
+        console.log("carrito:",cartItems)
         
-        // Se prepara el ojeto que se enviara al back con los productos en el carrito
+        // Se prepara el objeto que se enviara al back con los productos en el carrito
         //y los datos del usuario correspondiente:
         const carrito = {
             ...carritoTemp,
@@ -97,7 +97,7 @@ export const CartProvider = ({children})=>{
         return carrito
     };
 
-    return(     //se returnan los elementos que se compartiran por medio del context y el provider
+    return(     //se retornan los elementos que se compartiran por medio del context y el provider
         <CartContext.Provider 
         value={{cartItems, products, addItemToCart, deleteItemToCart,makeOrder,showCart}}
         >

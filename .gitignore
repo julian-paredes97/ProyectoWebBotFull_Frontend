@@ -1,6 +1,8 @@
 
 /Bot/*
 /Bot
+/Data
+/Data/*
 
 # dependencies
 /node_modules

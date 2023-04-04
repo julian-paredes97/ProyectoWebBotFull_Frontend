@@ -1,26 +1,14 @@
 import React, {useContext} from "react";
-//import React, { useState ,useContext} from "react";
-//import "./Card.css";
 import { CartContext} from '../../Context/CartContext'
 import styles from "./styles.module.scss"
 import 'bootstrap/dist/css/bootstrap.min.css';
-//import Button from "../Button/Button";
 
 function Card({ food/*, onAdd, onRemove */}) {
-  /*const [count, setCount] = useState(0);*/
   /* Traemos del context la funcion para agregar un producto */
   const { addItemToCart } = useContext(CartContext);
-  //const { id, price, amount, name, img ,category } = food;
+
   const { codigo,categoria,descripcion, precio, cantidad, imagen } = food;
 
-  /*const handleIncrement = () => {
-    setCount(count + 1);
-    onAdd(food);
-  };
-  const handleDecrement = () => {
-    setCount(count - 1);
-    onRemove(food);
-  };*/
 
   return (
     <div className="card">
@@ -38,10 +26,6 @@ function Card({ food/*, onAdd, onRemove */}) {
         </div>
     </div>
   );
-
-/*<p className={styles.p}>
-              {name} - ${price}
-            </p>*/
 
 }
 

@@ -1,145 +1,88 @@
-//import React, {useContext, useState} from 'react'
-//import React, {useEffect, useRef, useState} from 'react'
 import React, {useState, useEffect, useContext} from 'react'
-//import {productsData} from '../../Data/ProductsData'
 import CartContext from '../../Context/CartContext'
 import Card from '../Card'
 import styles from "./styles.module.scss"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap'
-//import FullPageLoader from '../Loader';
 
-//var temp = productsData;
-
-const tele = window.Telegram.WebApp; //conectar a telegram
+const tele = window.Telegram.WebApp; //conecta a telegram
 
 var temp;
 
-var count = false;
+var count = false; //bandera para saber si ya se selecciono alguna categoria
 
 function Products () {
-  /* Traemos del context la funcion para agregar un producto */
-  /*const { addItemToCart } = useContext(CartContext);*/
 
-  /* Traemos del context la funcion para agregar un producto */
+  /* Traemos del context los productos: */
   const { products } = useContext(CartContext);
 
-
+  console.log("count:",count)
   if(count === false){
-    temp = products;
-    count=true;
+    temp = products;    //carga los productos al inicio
   }
 
-  //temp = products;
-
-  console.log("chupamelooo",products);
+  console.log("productos:",products);
 
   const [dropdown,setDropdown] = useState(false);
 
   useEffect(() => {              //conectar a telegram
-    tele.ready();
-    tele.expand();
+    tele.ready();                //avisa a la WebApp que ya esta conectado a telegram
+    tele.expand();               //Expande la ventana de la WebApp
   });
 
-/*
-  useEffect(() => {
-    
-    document.addEventListener('click',clickAfuera,true);
-  
-  }, []);
 
-  const btnRef = useRef();
-
-  const clickAfuera = (e) =>{
-    //console.log(e);
-    if(e.path[0] === btnRef.current){
-      //!btnRef.current.contains(e.target)){
-      console.log("click afuera");
-    }else{
-      console.log("click adentro");
-    }
-  }
-  */
-  
-/*  useEffect(effect: () =>{
-
-    const cerrarDropdown = e =>{
-      if(e.path[0].tagname !== "button"){
-        setDropdown(value:false);
-      }
-    };
-
-
-    document.body.addEventListener('click',cerrarDropdown);
-
-    return () => document.body.removeEventListener('click',cerrarDropdown);
-  }, deps:[]);
-*/
-  //var temp = productsData;
-
-  const abrirCerrarDropdown = () =>{
+  const abrirCerrarDropdown = () =>{  //funcion que permite abrir o cerrar el dropdown
     setDropdown(!dropdown);
   }
 
-  //var Aseo=0;
-
-  const accionTodas =() =>{
-    //alert("soy la accion 1");
-    //Aseo = Aseo + 1;
-    //console.log(Aseo)
+  const accionTodas =() =>{     //funcion que permite listar todos los productos del catalogo
     temp=products;     //cambia para mostrar todos los productos
-    //console.log(temp)
-    //console.log("aber:")
-    //console.log(cartItems)
+    count = true;
   }
 
   const accionAseo =() =>{
-    temp = filteredAseo;
+    temp = filteredAseo;        //cambia todos los productos por solo los de aseo
+    count = true;
   }
 
   const accionAldor =() =>{
-    temp = filteredAldor;
+    temp = filteredAldor;       //cambia todos los productos por solo los de aldor
+    count = true;
   }
 
   const accionFarmacos =() =>{
-    //alert("soy la accion 1");
-    //Aseo = Aseo + 1;
-    //console.log(Aseo)
-    temp=filteredFarmacos;     //cambia todos los productos por solo los de aseo
+    temp=filteredFarmacos;     //cambia todos los productos por solo los farmacos
     console.log(temp)
-    //console.log(temp)
-    //console.log("aber:")
-    //console.log(cartItems)
+    count = true;
   }
 
   const accionCuidadoIntimo =() =>{
-    //alert("soy la accion 1");
-    //Aseo = Aseo + 1;
-    //console.log(Aseo)
-    temp=filteredCuidadoIntimo;     //cambia todos los productos por solo los de aseo
+    temp=filteredCuidadoIntimo;     //cambia todos los productos por solo los de cuidado intimo
     console.log(temp)
-    //console.log(temp)
-    //console.log("aber:")
-    //console.log(cartItems)
+    count = true;
   }
 
   const accionCuidadoPersonal =() =>{
-    temp = filteredCuidadoPersonal;
+    temp = filteredCuidadoPersonal;         //cambia todos los productos por solo los de cuidado personal
+    count = true;
   }
 
   const accionDetergentes =() =>{
-    temp = filteredDetergentes;
+    temp = filteredDetergentes;           //cambia todos los productos por solo los detergentes
+    count = true;
   }
 
   const accionEnlatados =() =>{
-    temp = filteredEnlatados;
+    temp = filteredEnlatados;           //cambia todos los productos por solo los enlatados
+    count = true;
   }
 
   const accionTratCapilares =() =>{
-    temp = filteredTratCapilares;
+    temp = filteredTratCapilares;         //cambia todos los productos por solo los tratamientos capilares
+    count = true;
   }
 
-  // Find multiple objects that satisfy condition
+  // Filtros que se van a aplicar:
   const filteredAseo = products.filter(obj => {
     return obj.categoria ==='GLOBOVENTAS (COLGATE)';
   });
@@ -206,15 +149,6 @@ function Products () {
         return (
             <Card food={product} key={codigo} /*onAdd={onAdd} onRemove={onRemove}*/ />
           );
-        /*<div key={i} className={styles.card}>
-          <img src={product.img} alt={product.name} />
-          <div>
-            <p>
-              {product.name} - ${product.price}
-            </p>
-          </div>
-          <button onClick={()=> addItemToCart(product)}>Agregar al carrito</button>
-        </div>*/
         })}
     </div>
     </>

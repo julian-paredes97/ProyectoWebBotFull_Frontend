@@ -6,9 +6,6 @@ export const ItemCart = ({ item }) => {
   /* Traemos del context las funciones para agregar y sacar productos del carrito */
   const { deleteItemToCart, addItemToCart } = useContext(CartContext);
 
-  /* Desestructuramos el item para sacar solo la id */
-  //const { id } = item;
-
   return (
     <div className={styles.cartItem}>
       <img src={item.imagen} alt={item.descripcion} className={styles.image__container}/>
